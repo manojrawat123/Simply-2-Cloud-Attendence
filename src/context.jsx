@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useState } from "react";
+import Cookies from "js-cookies";
 // import Toast from "react-native-toast-message";
 import { API_BASE_URL } from "./config";
 import { toast } from "react-toast";
@@ -11,28 +12,23 @@ const DataProviderFuncComp = ({ children }) => {
   const [attendenceObj, setAttendenceObj] = useState();
   const [employeesDetail, setEmployeeDetail] = useState();
   const [employeeMonthData, setEmployeeMonthData] = useState();
+  const [leaveData, setLeaveData] = useState(); 
 
-  const token = localStorage.getItem("accessToken");
+
+  const token = Cookies.getItem("accessToken");
 
   const getCheckInId = () => {
-    const value = localStorage.getItem("attendence_id");
+    const value = Cookies.getItem("attendence_id");
     setCheckInId(value);
   };
 
-  const showErrorToast = (error, message)=>{
-      toast.error(message);
-  }
-  const showSuccessToast = (success, message)=>{
-    toast.success(message);
-  }
-
-
   const handleErrorFunc = (error) => {
+    console.log(error);
     if (error?.response) {
       if (error?.response?.status == 400) {
         console.log(error?.response?.data?.error);
         if (error?.response?.data?.error) {
-          showErrorToast("Error", error?.response?.data?.error)
+          toast.error(error?.response?.data?.error)
         }
         else {
           const responseData = error?.response?.data;
@@ -40,10 +36,10 @@ const DataProviderFuncComp = ({ children }) => {
             Object.keys(responseData).forEach(field => {
               const errorMessages = responseData[field].join('\n');
               if (field == "non_field_errors") {
-                showErrorToast("Validation Error", `${errorMessages}`);
+                toast.error(`${errorMessages}`);
               }
               else {
-                showErrorToast("Validation Error", `${field}: ${errorMessages}`);
+                toast.error(`${field}: ${errorMessages}`);
               }
             });
 
@@ -51,20 +47,82 @@ const DataProviderFuncComp = ({ children }) => {
         }
       }
       else if (error?.response?.status == 500) {
-        showErrorToast("Error", "Internal Server Error");
+        toast.error("Internal Server Error");
       }
       else if (error?.response?.status == 401) {
-        showErrorToast("Error", "Unauthorized User");
+        toast.error("Unauthorized User");
       }
       else {
-        showErrorToast("Error", "Some Error Occured");
+        toast.error("Some Error Occured");
       }
     }
     else {
-      showErrorToast("Error", error);
+      toast.error( error);
       setInterval(() => {
-        showErrorToast("Error", error?.message);
+        toast.error(error?.message);
       }, 4000);
+    }
+  }
+
+
+  const getLeaveDetailFunc = async () => {
+    setLeaveData(null);
+    const token = Cookies.getItem('accessToken');
+    axios.get(`${API_BASE_URL}/leave/`, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      },
+      params: {
+        year: new Date().getFullYear()
+      }
+    }).then(async (response) => { 
+      setLeaveData(response?.data);
+    }).catch((error) => {
+      if(error?.response){
+        console.log(error?.response?.data);
+      }
+    });
+  }
+
+  const getAttendenceDetailByYear = async (id, year) => {
+    try {
+      const token = Cookies.getItem('accessToken');
+      axios.get(`${API_BASE_URL}/checkin/${id}/`, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        },
+        params: {
+          year: year
+        }
+      }).then((response) => {
+        setAttendenceObj(response.data);
+      }).catch((error) => {
+        handleErrorFunc(error);
+      })
+    } catch (error) {
+      handleErrorFunc(error);
+    }
+  }
+
+  const monthDataFunc = async (year, month, employee_id) => {
+    setEmployeeMonthData();
+    try {
+      const token = Cookies.getItem('accessToken');
+      axios.get(`${API_BASE_URL}/get_month_data/${employee_id}/`, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        },
+        params: {
+          year: year,
+          month: month
+        }
+      }).then(async (response) => {
+        setEmployeeMonthData(response.data);
+      }).catch((error) => {
+        console.log(error);
+      })
+    } catch (error) {
+      handleErrorFunc(error);
     }
   }
 
@@ -73,7 +131,13 @@ const DataProviderFuncComp = ({ children }) => {
       value={{
         checkinId,
         getCheckInId,
-        handleErrorFunc
+        handleErrorFunc,
+        getLeaveDetailFunc,
+        leaveData,
+        getAttendenceDetailByYear,
+        attendenceObj,
+        monthDataFunc,
+
       }}
     >
       {children}

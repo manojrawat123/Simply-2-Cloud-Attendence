@@ -5,7 +5,7 @@ import { DataContext } from '../../context';
 import axios from 'axios';
 import { API_BASE_URL } from '../../config';
 import { CircularProgress } from '@mui/material';
-import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
 
@@ -13,59 +13,26 @@ const Home = () => {
   const [position , setPosition] = useState();  
 
   const { handleErrorFunc } = useContext(DataContext);
+  
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
         await getPermissions();
-        // await getCheckInId();
     }
     fetchData();
 }, []);
 
-let lastCheckinLocation = null; 
-let filteredLocations = [];
-
 const getPermissions = async () => {
-  try {
-    const currentLocation = await new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(resolve, reject);
-    });
-
-    const filteredLocation = applyFilter(currentLocation.coords.latitude, currentLocation.coords.longitude);
-
-    if (lastCheckinLocation) {
-      const distance = calculateDistance(
-        filteredLocation.latitude,
-        filteredLocation.longitude,
-        lastCheckinLocation.latitude,
-        lastCheckinLocation.longitude
-      );
-
-      if (distance > 200) {
-          toast.error("Invalid Location", {
-            position : "top-center"
-          })
-      }
-    }
-  } catch (error) {
-    console.error('Error during check-in:', error);
-  }
-};
-
-function applyFilter(latitude, longitude) {
-  const FILTER_WINDOW_SIZE = 3; 
-  filteredLocations.push({ latitude, longitude });
-
-  if (filteredLocations.length > FILTER_WINDOW_SIZE) {
-    filteredLocations.shift();
-  }
-
-  const averageLatitude = filteredLocations.reduce((sum, loc) => sum + loc.latitude, 0) / filteredLocations.length;
-  const averageLongitude = filteredLocations.reduce((sum, loc) => sum + loc.longitude, 0) / filteredLocations.length;
-
-  return { latitude: averageLatitude, longitude: averageLongitude };
+try {
+  const currentLocation = await new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+  setPosition(currentLocation);
+} catch (error) {
+  console.error('Error getting location:', error);
 }
-
+};
 
 const checkInFunc = async () => {
     setButton(true);
@@ -139,7 +106,6 @@ const checkOutFunc = async () => {
 
   return (
     <>
-    <ToastContainer />
     <div className=''>
     <div className='md:flex md:items-center md:justify-center h-[80vh] '>
 
@@ -178,13 +144,20 @@ const checkOutFunc = async () => {
         </div>
         <div className="flex justify-center items-center py-4">
           <button
+          onClick={()=>{
+            navigate("/manageleaves");
+          }}
              className="w-full bg-gradient-to-r from-green-700 to-green-800 hover:from-green-900 hover:to-green-500 text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300"
              >
-          Take a Leave
+          Manage Leaves
           </button>
         </div>
         <div className="flex justify-center items-center py-4">
           <button
+          type='button'
+          onClick={()=>{
+            navigate(`/mydetail/${Cookies.getItem("id")}`);
+          }}
              className="w-full bg-gradient-to-r from-green-700 to-green-800 hover:from-green-900 hover:to-green-500 text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300"
              >
          My Details

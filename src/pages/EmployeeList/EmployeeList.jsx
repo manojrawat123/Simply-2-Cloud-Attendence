@@ -8,10 +8,8 @@ const EmployeesList = () => {
 
   useEffect(() => {
     getUserAdmin();
-
-    // Simulate animation delay for illustrative purposes (adjust as needed)
     setTimeout(() => {
-      setAnimatedY(1); // Assuming animation progresses to 1
+      setAnimatedY(1); 
     }, 1000);
   }, []);
 
@@ -19,7 +17,7 @@ const EmployeesList = () => {
     return <LoadingSpinner />;
   }
 
-  const translateY = animatedY; // Adjust for your chosen animation implementation
+  const translateY = animatedY;
 
   return (
     <div className="container flex flex-col p-4 mt-20 bg-gray-200">

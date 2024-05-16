@@ -3,15 +3,17 @@ import EmployeeMonthDataSupport from './EmployeeMonthDataSup';
 import MyButton from '../../customButton';
 import { DataContext } from '../../context';
 import LoadingSpinner from '../../component/LoadingSpinner/LoadingSpinner';
+import { useParams } from 'react-router-dom';
 
 const EmployeeMonthData = ({ navigation }) => {
+  
   const route = useRoute();
-  const { month, year, employee_id } = route.params;
-
+  const { month, id } = useParams;
   const { monthDataFunc, employeeMonthData } = useContext(DataContext);
 
   useEffect(() => {
-    monthDataFunc(year, month, employee_id);
+    const year = new Date().getFullYear();
+    monthDataFunc(year, month, id);
   }, []);
 
   if (!employeeMonthData) {
@@ -21,9 +23,8 @@ const EmployeeMonthData = ({ navigation }) => {
   return (
     <div className="container px-4 py-8">
       <div className="flex justify-center mb-8">
-        <MyButton title={month} onPress={() => {}} />
+        <button onClick={() => {}}>{month}</button>
       </div>
-
       <EmployeeMonthDataSupport data={employeeMonthData} />
     </div>
   );
