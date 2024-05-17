@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { DataContext, DataProviderFuncComp } from './context';
 import LoginPage from './component/Login/LoginPage';
 import Register from './component/Register/Register';
@@ -12,16 +12,30 @@ import TakeLeave from './pages/TakeLeaves/TakeLeave';
 import LeaveDisplay from './pages/TakeLeaves/LeaveDisplay/LeaveDisplay';
 import AttendanceScreen from './pages/attendenceScreen/attendenceScreen';
 import EmployeeMonthData from './pages/EmployeeMonthData/EmployeeMonthData';
+import { ArrowBack } from '@mui/icons-material';
 
 function App() {
   useEffect(() => {
   }, []);
 
+  const location = useLocation();
+
+const navigate = useNavigate()
 
 
   // Handle both authenticated and unauthenticated routes using Routes and Navigate
   return (
     <>
+{
+  location.pathname != "/" ? 
+    <div className='fixed h-[2rem] w-[2rem] py-3'>
+      <button onClick={()=>{
+        navigate(-1)
+      }}>
+      <ArrowBack /> 
+      </button>
+    </div> : ""
+}
     <div className=''>
       <Routes>
         {/* Unauthenticated routes */}
