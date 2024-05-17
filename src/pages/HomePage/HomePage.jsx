@@ -6,13 +6,19 @@ import axios from 'axios';
 import { API_BASE_URL } from '../../config';
 import { CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import Heading from '../../component/CommonCmp/Heading/Heading';
+import HeadingO from '../../component/CommonCmp/Heading/HeadingO';
+import { ToastContainer, toast } from 'react-toast';
+import NoDataPage from '../../component/NoDataPage/NoDataPage';
 
 const Home = () => {
 
   const [button, setButton] = useState();
   const [position , setPosition] = useState();  
 
-  const { handleErrorFunc } = useContext(DataContext);
+  const { handleErrorFunc, getProfileFunc, profileData } = useContext(DataContext);
+
+
   
   const navigate = useNavigate();
 
@@ -21,6 +27,7 @@ const Home = () => {
         await getPermissions();
     }
     fetchData();
+    getProfileFunc();
 }, []);
 
 const getPermissions = async () => {
@@ -37,6 +44,7 @@ try {
 const checkInFunc = async () => {
     setButton(true);
     const token = Cookies.getItem("accessToken");
+    
     try {
         axios.post(`${API_BASE_URL}/checkin/`, {
             latitude: position?.coords?.latitude,
@@ -47,29 +55,25 @@ const checkInFunc = async () => {
                 "Authorization": `Bearer ${token}`
             }
         }).then(async (response) => {
-            await Cookies.setItem("attendence_id", `${response.data?.attendence_id}`);
-            // await getCheckInId();
-            console.log("success")
-            showSuccessToast("Congratulation", "You Checked In Successfully");
+          getProfileFunc();
+            toast.success("You Checkin Sucessfully")
         }).catch((error) => {
-          console.log(error)
             handleErrorFunc(error);
         }).finally(() => {
             setButton(false);
         });
     } catch (error) {
-console.log(error);
         handleErrorFunc(error);
         setButton(false);
     }
 }
 
-const checkOutFunc = async () => {
+const checkOutFunc = async (attendanceId) => {
     setButton(true);
+    const token = Cookies.getItem("accessToken");
     try {
-        const attendanceId = await localStorage.getItem("attendence_id");
         axios.put(`${API_BASE_URL}/checkin/${attendanceId}/`, {
-            user: id,
+            user: Cookies.getItem("id"),
             latitude: position?.coords.latitude,
             longitude: position?.coords.longitude,
         }, {
@@ -77,15 +81,13 @@ const checkOutFunc = async () => {
                 "Authorization": `Bearer ${token}`
             }
         }).then(async (response) => {
-            await localStorage.removeItem("attendence_id");
-            await getCheckInId();
-            showSuccessToast("Congratulation", "You Checked Out Successfully")
+          getProfileFunc();
+            toast.success("Checkout Sucessfully");
         }).catch(async (error) => {
-            if (error.response) {
-                if (error.response.status == 400) {
-                    if (error.response.data.error == "Checkout should on the same day") {
-                        await localStorage.removeItem("attendence_id");
-                        await getCheckInId();
+            if (error?.response) {
+                if (error?.response?.status == 400) {
+                    if (error?.response?.data?.error == "Checkout should on the same day") {
+                      toast.error(error.response.data.error);
                     }
                 }
             }
@@ -99,26 +101,24 @@ const checkOutFunc = async () => {
     }
 }
 
-// if (!employee) {
-//     return <LoadingSpinner />
-// }
+if (!profileData) {
+    return <Loading />
+}
 
 
   return (
-    <>
-    <div className=''>
-    <div className='md:flex md:items-center md:justify-center h-[80vh] '>
+<>
+<ToastContainer />
 
-    
+ {profileData == "error" ? 
+    <NoDataPage domain={"404 Error"} subdomain={"User Not Found"} /> :
+    <> 
+    <div className='h-[100vh] bg-gray-200 flex items-center justify-center'>
+    <div className='h-[80%] w-[30rem] bg-white my-auto mx-auto p-4 rounded-xl'>
     <div className='' style={{
-      display : "flex", flexDirection : "column" , justifyContent : "space-between", height : "70%"
     }}>
-      <div>
-        <h1 className='text-5xl md:text-6xl font-bold  text-white md:mx-0 md:my-0 my-10 mx-4'>Simply 2 Cloud 
-        <br />Attendence</h1>
-      </div>
-
-      <div className='md:mx-0 md:my-0 my-10 mx-4'>
+<HeadingO mainHeading={"Simply 2 Cloud"} subHeading={"Attendence App"}/>
+      <div className='md:mx-0 md:my-0 mt-20 mb-4 mx-4'>
       <div className="flex justify-center items-center py-4">
         {button && 
          <div className="fixed inset-0 flex items-center justify-center bg-gray-900  bg-opacity-75">
@@ -127,17 +127,20 @@ const checkOutFunc = async () => {
         </div>
         </div>
         }
-         {Cookies.getItem("attendence_id") == "undefined" || !Cookies.getItem("attendence_id") ? <button
+         {!profileData?.checkin_id ? <button
           onClick={checkInFunc}
-            className="w-full bg-gradient-to-r from-green-700 to-green-800 hover:from-green-900 hover:to-green-500 text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300"
-          >
-          {!button ? "Checkin" : "Please wait"}
+          className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300 w-full "
+           >
+          {!button ? "Check in" : "Please wait"}
           </button> : 
            <button
-           onClick={checkInFunc}
-             className="w-full bg-gradient-to-r from-green-700 to-green-800 hover:from-green-900 hover:to-green-500 text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300"
+           onClick={()=>{
+            checkOutFunc(profileData?.checkin_id);
+           }}
+           disabled={!profileData?.show_checkout_button}
+           className={`text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300 w-full ${profileData?.show_checkout_button ? "bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500": "bg-gray-400 cursor-not-allowed "}}` }
            >
-           {!button ? "Checkout" : "Please wait"}
+           {!button ? "Check out" : "Please wait"}
            </button>
           
           }
@@ -158,7 +161,7 @@ const checkOutFunc = async () => {
           onClick={()=>{
             navigate(`/mydetail/${Cookies.getItem("id")}`);
           }}
-             className="w-full bg-gradient-to-r from-green-700 to-green-800 hover:from-green-900 hover:to-green-500 text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300"
+             className="bg-black w-full text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring transition duration-300"
              >
          My Details
           </button>
@@ -168,8 +171,10 @@ const checkOutFunc = async () => {
     
     </div>
     </div>
+    
     </>
-  );
+    }
+  </>);
 };
 
 export default Home;

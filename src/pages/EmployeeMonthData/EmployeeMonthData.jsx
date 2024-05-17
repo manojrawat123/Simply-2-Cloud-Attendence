@@ -1,14 +1,13 @@
 import React, { useContext, useEffect } from 'react';
-import EmployeeMonthDataSupport from './EmployeeMonthDataSup';
-import MyButton from '../../customButton';
-import { DataContext } from '../../context';
-import LoadingSpinner from '../../component/LoadingSpinner/LoadingSpinner';
 import { useParams } from 'react-router-dom';
+import MonthSupport from './MonthSupport';
+import { DataContext } from '../../context';
+import Loading from '../../component/LoadingSpinner/LoadingSpinner';
+import HeadingO from '../../component/CommonCmp/Heading/HeadingO';
 
 const EmployeeMonthData = ({ navigation }) => {
-  
-  const route = useRoute();
-  const { month, id } = useParams;
+
+  const { month, id } = useParams();
   const { monthDataFunc, employeeMonthData } = useContext(DataContext);
 
   useEffect(() => {
@@ -17,15 +16,15 @@ const EmployeeMonthData = ({ navigation }) => {
   }, []);
 
   if (!employeeMonthData) {
-    return <LoadingSpinner />;
+    return <Loading />;
   }
 
   return (
-    <div className="container px-4 py-8">
-      <div className="flex justify-center mb-8">
-        <button onClick={() => {}}>{month}</button>
+    <div className='h-[100vh] bg-gray-200 flex items-center justify-center '>
+      <div className='w-[30rem] bg-white  mx-auto p-4 rounded-xl '>
+        <HeadingO mainHeading={"Simply 2 Cloud"} subHeading={"Attendence App"} />
+        <MonthSupport data={employeeMonthData} />
       </div>
-      <EmployeeMonthDataSupport data={employeeMonthData} />
     </div>
   );
 };

@@ -1,19 +1,19 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import HeadingO from '../../component/CommonCmp/Heading/HeadingO';
 
 const ManageLeaves = () => {
 
     const navigate = useNavigate();
   return (
-    <div className=''>
-    <div className='md:flex md:items-center md:justify-center h-[80vh] '>    
+    <div className='h-[100vh] bg-gray-200 flex items-center justify-center'>
+    <div className='h-[80%] w-[30rem] bg-white my-auto mx-auto p-4 rounded-xl'> 
     <div className='' style={{
-      display : "flex", flexDirection : "column" , justifyContent : "space-between", height : "70%"
+      // display : "flex", flexDirection : "column" , justifyContent : "space-between", height : "70%"
     }}>
-      <div>
-        <h1 className='text-5xl md:text-6xl font-bold  text-white md:mx-0 md:my-0 my-10 mx-4'>Simply 2 Cloud 
-        <br />Attendence</h1>
-      </div>
+      
+      <HeadingO mainHeading={"Simply 2 Cloud"} subHeading={"Manage Leaves"}/>
+
 
       <div className='md:mx-0 md:my-0 my-10 mx-4'>
       <div className="flex justify-center items-center py-4">
@@ -21,7 +21,7 @@ const ManageLeaves = () => {
           onClick={()=>{
             navigate("/oneleave")
           }}
-            className="w-full bg-gradient-to-r from-green-700 to-green-800 hover:from-green-900 hover:to-green-500 text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300"
+          className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300 w-full "
           >
         Take one day leave
           </button> 
@@ -42,8 +42,8 @@ const ManageLeaves = () => {
           onClick={()=>{
             navigate("/leavedetails");
           }}
-             className="w-full bg-gradient-to-r from-green-700 to-green-800 hover:from-green-900 hover:to-green-500 text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300"
-             >
+          className="bg-black w-full text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring transition duration-300"
+          >
          Leaves Details
           </button>
         </div>

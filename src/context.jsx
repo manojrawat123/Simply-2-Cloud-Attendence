@@ -13,6 +13,7 @@ const DataProviderFuncComp = ({ children }) => {
   const [employeesDetail, setEmployeeDetail] = useState();
   const [employeeMonthData, setEmployeeMonthData] = useState();
   const [leaveData, setLeaveData] = useState(); 
+  const [profileData , setProfileData] = useState();
 
 
   const token = Cookies.getItem("accessToken");
@@ -33,15 +34,21 @@ const DataProviderFuncComp = ({ children }) => {
         else {
           const responseData = error?.response?.data;
           if (responseData) {
-            Object.keys(responseData).forEach(field => {
-              const errorMessages = responseData[field].join('\n');
-              if (field == "non_field_errors") {
-                toast.error(`${errorMessages}`);
-              }
-              else {
-                toast.error(`${field}: ${errorMessages}`);
-              }
-            });
+            try{
+
+              Object.keys(responseData).forEach(field => {
+                const errorMessages = responseData[field].join('\n');
+                if (field == "non_field_errors") {
+                  toast.error(`${errorMessages}`);
+                }
+                else {
+                  toast.error(`${field}: ${errorMessages}`);
+                }
+              });
+            }
+            catch (errorc){
+              toast.error(error?.response?.data?.error)
+            }
 
           }
         }
@@ -65,6 +72,22 @@ const DataProviderFuncComp = ({ children }) => {
   }
 
 
+  const getProfileFunc = async () => {
+    setProfileData(null);
+    const token = Cookies.getItem('accessToken');
+    axios.get(`${API_BASE_URL}/profile/`, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      },
+    }).then(async (response) => { 
+      setProfileData(response?.data);
+    }).catch((error) => {
+      setProfileData("error");
+      if(error?.response){
+        console.log(error?.response?.data);
+      }
+    });
+  }
   const getLeaveDetailFunc = async () => {
     setLeaveData(null);
     const token = Cookies.getItem('accessToken');
@@ -118,6 +141,7 @@ const DataProviderFuncComp = ({ children }) => {
         }
       }).then(async (response) => {
         setEmployeeMonthData(response.data);
+        
       }).catch((error) => {
         console.log(error);
       })
@@ -125,6 +149,11 @@ const DataProviderFuncComp = ({ children }) => {
       handleErrorFunc(error);
     }
   }
+
+
+//   SSID (Service Set Identifier):
+// BSSID (Basic Service Set Identifier):
+
 
   return (
     <DataContext.Provider
@@ -137,7 +166,9 @@ const DataProviderFuncComp = ({ children }) => {
         getAttendenceDetailByYear,
         attendenceObj,
         monthDataFunc,
-
+        getProfileFunc,
+        profileData,
+        employeeMonthData
       }}
     >
       {children}

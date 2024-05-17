@@ -11,6 +11,7 @@ import ManageLeaves from './pages/TakeLeaves/ManageLeaves';
 import TakeLeave from './pages/TakeLeaves/TakeLeave';
 import LeaveDisplay from './pages/TakeLeaves/LeaveDisplay/LeaveDisplay';
 import AttendanceScreen from './pages/attendenceScreen/attendenceScreen';
+import EmployeeMonthData from './pages/EmployeeMonthData/EmployeeMonthData';
 
 function App() {
   useEffect(() => {
@@ -21,7 +22,7 @@ function App() {
   // Handle both authenticated and unauthenticated routes using Routes and Navigate
   return (
     <>
-    <div className='background-image-container'>
+    <div className=''>
       <Routes>
         {/* Unauthenticated routes */}
         <Route path='/login' Component={LoginPage} />
@@ -43,6 +44,9 @@ function App() {
         </Route>
         <Route path='' Component={ProtectedRoutes} >
           <Route path='/mydetail/:id' Component={AttendanceScreen} />
+        </Route>
+        <Route path='' Component={ProtectedRoutes} >
+          <Route path='//attendence/:id/:month' Component={EmployeeMonthData} />
         </Route>
 
       </Routes>

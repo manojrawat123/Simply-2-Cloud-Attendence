@@ -3,9 +3,11 @@ import NoDataPage from '../../../component/NoDataPage/NoDataPage';
 import Loading from '../../../component/LoadingSpinner/LoadingSpinner';
 import { DataContext } from '../../../context';
 import Cookies from "js-cookies";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../config';
+import { format } from 'date-fns';
+import HeadingO from '../../../component/CommonCmp/Heading/HeadingO';
 
 
 
@@ -44,7 +46,9 @@ const LeaveDisplay = () => {
           };
 
     return (
-        <div className="relative">
+      <div className='h-[100vh] bg-gray-200 flex items-center justify-center'>
+        <ToastContainer />
+      <div className=' w-[30rem] bg-white my-auto mx-auto p-4 rounded-xl '>
       {leaveData?.length === 0 ? (
           <NoDataPage domain={"No Leave Taken This Year"} subdomain={"No Data!"} height={"70vh"} />
       ) : (
@@ -54,15 +58,19 @@ const LeaveDisplay = () => {
               <Loading />
             </div>
           )}
-          <div className="mt-20 h-[80vh] overflow-y-scroll">
+       
+          <HeadingO mainHeading={"Leave Details"} subHeading={""}/>
+          <div className="  bg-white rounded  h-[80vh] overflow-y-scroll border p-4 text-gray-700">
             {leaveData?.map((employee, index) => (
-              <div key={index} className={`py-4 ${index % 2 === 0 ? 'bg-purple-500' : 'bg-custom-background'}`}>
+              <div key={index} className={`py-4 rounded border my-3 text-center cursor-pointer hover:bg-gray-300 ${index % 2 === 0 ? '' : 'bg-gray-100'}`}>
                 <div className="flex items-center">
                   <p className="flex-1 text-lg font-bold mb-2">
-                    {employee.date} {employee.leave_type ? employee.leave_type : "(Full Day)"}
+                    {format(new Date(employee.date), 'd MMMM yyyy')} {employee.leave_type ? employee.leave_type : "(Full Day)"}
                   </p>
                   {employee?.is_editable && (
-                    <button className="text-red-500" onClick={() => deleteLeaveFunc(employee.id)}>Cancel</button>
+                    <button                 
+                    className="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-700 mx-4"
+                    onClick={() => deleteLeaveFunc(employee.id)}>Cancel</button>
                   )}
                 </div>
               </div>
@@ -70,6 +78,7 @@ const LeaveDisplay = () => {
           </div>
         </div>
       )}
+    </div>
     </div>
   )
 }
