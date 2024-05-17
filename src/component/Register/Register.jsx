@@ -126,6 +126,17 @@ const Register = () => {
                                             {registerButton ? <CircularProgress size={19} color='inherit'/> : "Register"}
                                         </button>
                                     </div>
+                                    <div className="mb-4 mx-5">
+                                        <button
+                                            type="button"
+                                            onClick={()=>{
+                                                navigate("/login")
+                                            }}
+                                            className="w-full bg-black text-white py-2 px-4 rounded hover:bg-black transition duration-300"
+                                        >
+                                            {"Login Now"}
+                                        </button>
+                                    </div>
                             </Form>
                         )}
                     </Formik>
