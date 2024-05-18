@@ -5,7 +5,6 @@ import LoginPage from './component/Login/LoginPage';
 import Register from './component/Register/Register';
 import ProtectedRoutes from './component/ProtectedRoutes/ProtectedRoutes';
 import Home from './pages/HomePage/HomePage';
-import leave from "./img/leaves.jpg";
 import TakeOneLeave from './pages/TakeLeaves/TakeOneLeave';
 import ManageLeaves from './pages/TakeLeaves/ManageLeaves';
 import TakeLeave from './pages/TakeLeaves/TakeLeave';
@@ -26,8 +25,11 @@ const navigate = useNavigate()
   // Handle both authenticated and unauthenticated routes using Routes and Navigate
   return (
     <>
+    {
+      console.log(location.pathname)
+    }
 {
-  location.pathname != "/" ? 
+   location.pathname !== "/" && location.pathname !== "/login" && location.pathname !== "/register" ? 
     <div className='fixed h-[2rem] w-[2rem] py-3'>
       <button onClick={()=>{
         navigate(-1)
