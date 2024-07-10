@@ -35,6 +35,14 @@ const design = "absolute top-2 border-r border-black peer-focus:text-violet-700"
           icon: <EmailIcon className={design} />
         },
         {
+          type: "date",
+          id: "date_of_birth",
+          name: "date_of_birth",
+          required: true,
+          placeholder: "Enter Date Of Birth",
+          icon: <EmailIcon className={design} />
+        },
+        {
           type: "password",
           id: "password",
           name: "password",

@@ -4,6 +4,7 @@ import Cookies from "js-cookies";
 // import Toast from "react-native-toast-message";
 import { API_BASE_URL } from "./config";
 import { toast } from "react-toast";
+import { useNavigate } from "react-router-dom";
 
 const DataContext = createContext();
 
@@ -14,6 +15,7 @@ const DataProviderFuncComp = ({ children }) => {
   const [employeeMonthData, setEmployeeMonthData] = useState();
   const [leaveData, setLeaveData] = useState(); 
   const [profileData , setProfileData] = useState();
+  const navigate = useNavigate();
 
 
   const token = Cookies.getItem("accessToken");
@@ -57,6 +59,7 @@ const DataProviderFuncComp = ({ children }) => {
         toast.error("Internal Server Error");
       }
       else if (error?.response?.status == 401) {
+        logoutFunc();
         toast.error("Unauthorized User");
       }
       else {
@@ -71,6 +74,15 @@ const DataProviderFuncComp = ({ children }) => {
     }
   }
 
+  const logoutFunc = ()=>{
+    Cookies.removeItem('token');
+    Cookies.removeItem('user');
+    Cookies.removeItem('accessToken');
+    Cookies.removeItem('sessionid');
+    Cookies.removeItem('id');
+    navigate("/login");
+  }
+
 
   const getProfileFunc = async () => {
     setProfileData(null);
@@ -80,8 +92,10 @@ const DataProviderFuncComp = ({ children }) => {
         "Authorization": `Bearer ${token}`
       },
     }).then(async (response) => { 
+      console.log(response);
       setProfileData(response?.data);
     }).catch((error) => {
+      logoutFunc();
       setProfileData("error");
       if(error?.response){
         console.log(error?.response?.data);
