@@ -24,6 +24,7 @@ const Register = () => {
                 });
                 resetForm();
                 setTimeout(() => {
+                    console.log("settimeout");
                     navigate("/login");
                 }, 3000);
           }).catch((err)=>{

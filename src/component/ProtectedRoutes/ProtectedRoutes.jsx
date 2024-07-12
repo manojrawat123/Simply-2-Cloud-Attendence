@@ -9,9 +9,13 @@ const ProtectedRoutes = () => {
 
     useEffect(()=>{
         if (!Cookies.getItem('accessToken') || !Cookies.getItem("user") == "user"){
-            return navigate("/login");
+            navigate("/login");
         }
     },[]);
+
+    if (!Cookies.getItem('accessToken') || !Cookies.getItem("user") == "user"){
+      navigate('/login');
+    }
 
 
   return (
