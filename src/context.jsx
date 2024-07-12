@@ -94,14 +94,15 @@ const DataProviderFuncComp = ({ children }) => {
     }).then(async (response) => { 
       console.log(response);
       setProfileData(response?.data);
+      console.log("profile Func");
     }).catch((error) => {
+      console.log("hii")
       logoutFunc();
-      setProfileData("error");
-      if(error?.response){
-        console.log(error?.response?.data);
-      }
+      console.log(error);
     });
   }
+
+
   const getLeaveDetailFunc = async () => {
     setLeaveData(null);
     const token = Cookies.getItem('accessToken');

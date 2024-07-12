@@ -14,59 +14,54 @@ import EmployeeMonthData from './pages/EmployeeMonthData/EmployeeMonthData';
 import { ArrowBack } from '@mui/icons-material';
 
 function App() {
-  useEffect(() => {
-  }, []);
 
   const location = useLocation();
 
-const navigate = useNavigate()
+  const navigate = useNavigate()
 
 
   // Handle both authenticated and unauthenticated routes using Routes and Navigate
   return (
     <>
-    {
-      console.log(location.pathname)
-    }
-{
-   location.pathname !== "/" && location.pathname !== "/login" && location.pathname !== "/register" ? 
-    <div className='fixed h-[2rem] w-[2rem] py-3'>
-      <button onClick={()=>{
-        navigate(-1)
-      }}>
-      <ArrowBack /> 
-      </button>
-    </div> : ""
-}
-    <div className=''>
-      <Routes>
-        {/* Unauthenticated routes */}
-        <Route path='/login' Component={LoginPage} />
-        <Route path='/register' Component={Register} />
-        <Route path='' Component={ProtectedRoutes} >
-          <Route path='' Component={Home} />
-        </Route>
-        <Route path='' Component={ProtectedRoutes} >
-          <Route path='/oneleave' Component={TakeOneLeave} />
-        </Route>
-        <Route path='' Component={ProtectedRoutes} >
-          <Route path='/manageleaves' Component={ManageLeaves} />
-        </Route>
-        <Route path='' Component={ProtectedRoutes} >
-          <Route path='/customleave' Component={TakeLeave} />
-        </Route>
-        <Route path='' Component={ProtectedRoutes} >
-          <Route path='/leavedetails' Component={LeaveDisplay} />
-        </Route>
-        <Route path='' Component={ProtectedRoutes} >
-          <Route path='/mydetail/:id' Component={AttendanceScreen} />
-        </Route>
-        <Route path='' Component={ProtectedRoutes} >
-          <Route path='//attendence/:id/:month' Component={EmployeeMonthData} />
-        </Route>
+      {/* {
+        location.pathname !== "/" && location.pathname !== "/login" && location.pathname !== "/register" ?
+          <div className='fixed h-[2rem] w-[2rem] py-3'>
+            <button onClick={() => {
+              navigate(-1)
+            }}>
+              <ArrowBack />
+            </button>
+          </div> : ""
+      } */}
+      <div className=''>
+        <Routes>
+          {/* Unauthenticated routes */}
+          <Route path='/login' Component={LoginPage} />
+          <Route path='/register' Component={Register} />
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='' Component={Home} />
+          </Route>
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='/oneleave' Component={TakeOneLeave} />
+          </Route>
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='/manageleaves' Component={ManageLeaves} />
+          </Route>
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='/customleave' Component={TakeLeave} />
+          </Route>
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='/leavedetails' Component={LeaveDisplay} />
+          </Route>
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='/mydetail/:id' Component={AttendanceScreen} />
+          </Route>
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='//attendence/:id/:month' Component={EmployeeMonthData} />
+          </Route>
 
-      </Routes>
-    </div>
+        </Routes>
+      </div>
     </>
 
   );

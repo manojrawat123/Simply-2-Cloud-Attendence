@@ -23,7 +23,7 @@ const Register = () => {
                   position : "top-center"
                 });
                 resetForm();
-                setInterval(() => {
+                setTimeout(() => {
                     navigate("/login");
                 }, 3000);
           }).catch((err)=>{

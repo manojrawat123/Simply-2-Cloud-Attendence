@@ -24,6 +24,7 @@ const LoginPage = () => {
         Cookies.setItem("accessToken", res.data?.token?.access);
         Cookies.setItem("id", `${res.data?.user.id}`);
         Cookies.setItem("user", JSON.stringify(res.data?.user));
+        console.log("hii");
        navigate("/");
       })
       .catch((error) => {
