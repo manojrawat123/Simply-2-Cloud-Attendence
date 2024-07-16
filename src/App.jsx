@@ -12,28 +12,35 @@ import LeaveDisplay from './pages/TakeLeaves/LeaveDisplay/LeaveDisplay';
 import AttendanceScreen from './pages/attendenceScreen/attendenceScreen';
 import EmployeeMonthData from './pages/EmployeeMonthData/EmployeeMonthData';
 import { ArrowBack } from '@mui/icons-material';
+import Batch from './pages/BatchManagement/Batch';
+import AddBatch from './pages/BatchManagement/AddBatch/AddBatch';
+import DisplayBatch from './pages/BatchManagement/DisplayBatch/DisplayBatch';
+import AddStudent from './pages/BatchManagement/StudentManagement/AddStudent/AddStudent';
+import DisplayStudent from './pages/BatchManagement/StudentManagement/DisplayStudent/DisplayStudent';
 
 function App() {
 
   const location = useLocation();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-
-  // Handle both authenticated and unauthenticated routes using Routes and Navigate
   return (
     <>
-      {/* {
+      
+      <div className=''>
+
+  {
         location.pathname !== "/" && location.pathname !== "/login" && location.pathname !== "/register" ?
-          <div className='fixed h-[2rem] w-[2rem] py-3'>
+          <div className='fixed h-[2rem] w-[2rem] py-3 '>
+
             <button onClick={() => {
               navigate(-1)
-            }}>
-              <ArrowBack />
+            }} className='flex bg-black shadow-md text-white py-2 px-4 rounded mx-4'>
+              <ArrowBack fontSize='10' className='mt-1'/> <span className='hidden md:inline-block'>Back</span>
             </button>
           </div> : ""
-      } */}
-      <div className=''>
+      }
+
         <Routes>
           {/* Unauthenticated routes */}
           <Route path='/login' Component={LoginPage} />
@@ -41,6 +48,9 @@ function App() {
           <Route path='' Component={ProtectedRoutes} >
             <Route path='' Component={Home} />
           </Route>
+
+          
+
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/oneleave' Component={TakeOneLeave} />
           </Route>
@@ -57,7 +67,27 @@ function App() {
             <Route path='/mydetail/:id' Component={AttendanceScreen} />
           </Route>
           <Route path='' Component={ProtectedRoutes} >
-            <Route path='//attendence/:id/:month' Component={EmployeeMonthData} />
+            <Route path='/attendence/:id/:month' Component={EmployeeMonthData} />
+          </Route>
+
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='/manage-batch' Component={Batch} />
+          </Route>
+
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='/add-batch' Component={AddBatch} />
+          </Route>
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='/display-batch' Component={DisplayBatch} />
+          </Route>
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='/add-student' Component={AddStudent} />
+          </Route>
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='/display-student' Component={DisplayStudent} />
+          </Route>
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='/display-student/:id' Component={DisplayStudent} />
           </Route>
 
         </Routes>

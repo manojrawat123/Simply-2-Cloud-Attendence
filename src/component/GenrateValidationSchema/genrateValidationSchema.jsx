@@ -27,20 +27,9 @@ const generateValidationSchema = (inputFields) => {
     if (field.type == "url"){
      validationObject[field.name] = Yup.string().url('Please enter a valid URL').required('URL is required')
     }
-    if (field.name == "salary"){
-      validationObject[field.name] = Yup.number().min(5000);
-    }
-    if (field.name == "experience") {
-      validationObject[field.name] = Yup.number().max(5);
-    }
+    
     if (field.type == "dynamic" || field.type == "array"){
-
-      if (field.name == "job_categoery" || field.name == "sub_categoery" || field.name == "skill_name"){
-        validationObject[field.name] = Yup.object();
-      }
-      else{
-        validationObject[field.name] = Yup.array().min(1, "Please Select One Skill");
-      }
+        validationObject[field.name] = Yup.array().min(1, "This field is required");
     }
   });
 

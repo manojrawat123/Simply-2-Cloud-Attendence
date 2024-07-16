@@ -9,21 +9,20 @@ import { useNavigate } from "react-router-dom";
 const DataContext = createContext();
 
 const DataProviderFuncComp = ({ children }) => {
+
   const [checkinId, setCheckInId] = useState();
   const [attendenceObj, setAttendenceObj] = useState();
   const [employeesDetail, setEmployeeDetail] = useState();
   const [employeeMonthData, setEmployeeMonthData] = useState();
-  const [leaveData, setLeaveData] = useState(); 
-  const [profileData , setProfileData] = useState();
+  const [leaveData, setLeaveData] = useState();
+  const [profileData, setProfileData] = useState();
+  const [addBatchPageObj, setAddBatchPageObj] = useState();
+  const [studentPageObj, setStudentPageObj] = useState();
+  const [displayStudentObj , setDisplayStudentObj] = useState();
+
   const navigate = useNavigate();
 
-
   const token = Cookies.getItem("accessToken");
-
-  const getCheckInId = () => {
-    const value = Cookies.getItem("attendence_id");
-    setCheckInId(value);
-  };
 
   const handleErrorFunc = (error) => {
     console.log(error);
@@ -36,7 +35,7 @@ const DataProviderFuncComp = ({ children }) => {
         else {
           const responseData = error?.response?.data;
           if (responseData) {
-            try{
+            try {
 
               Object.keys(responseData).forEach(field => {
                 const errorMessages = responseData[field].join('\n');
@@ -48,7 +47,7 @@ const DataProviderFuncComp = ({ children }) => {
                 }
               });
             }
-            catch (errorc){
+            catch (errorc) {
               toast.error(error?.response?.data?.error)
             }
 
@@ -67,14 +66,64 @@ const DataProviderFuncComp = ({ children }) => {
       }
     }
     else {
-      toast.error( error);
-      setInterval(() => {
-        toast.error(error?.message);
-      }, 4000);
+      toast.error(error);
     }
   }
 
-  const logoutFunc = ()=>{
+  const commonGetApi = (route, setParamsData) => {
+    setParamsData();
+    const token = Cookies.getItem("accessToken");
+    axios.get(`${API_BASE_URL}/${route}/`, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    }).then((value) => {
+      setParamsData(value.data);
+    }).catch((err) => {
+      handleErrorFunc(err);
+    });
+  }
+
+  const commonGetIdApi = (route, id, setParamsData) => {
+    setParamsData();
+    const token = Cookies.getItem("accessToken");
+    axios.get(`${API_BASE_URL}/${route}/${id}/`, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    }).then((value) => {
+      setParamsData(value.data);
+    }).catch((err) => {
+      handleErrorFunc(err);
+    });
+  }
+
+  const commonGetParamsApi = (route, query, setParamsData) => {
+    setParamsData();
+    const token = Cookies.getItem("accessToken");
+    axios.get(`${API_BASE_URL}/${route}/`, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      },
+      params: query
+    }).then((value) => {
+      console.log(value.data);
+      setParamsData(value.data);
+    }).catch((err) => {
+      console.log(err);
+      handleErrorFunc(err);
+    });
+  }
+
+
+  const getCheckInId = () => {
+    const value = Cookies.getItem("attendence_id");
+    setCheckInId(value);
+  };
+
+
+
+  const logoutFunc = () => {
     Cookies.removeItem('token');
     Cookies.removeItem('user');
     Cookies.removeItem('accessToken');
@@ -91,7 +140,7 @@ const DataProviderFuncComp = ({ children }) => {
       headers: {
         "Authorization": `Bearer ${token}`
       },
-    }).then(async (response) => { 
+    }).then(async (response) => {
       console.log(response);
       setProfileData(response?.data);
       console.log("profile Func");
@@ -113,10 +162,10 @@ const DataProviderFuncComp = ({ children }) => {
       params: {
         year: new Date().getFullYear()
       }
-    }).then(async (response) => { 
+    }).then(async (response) => {
       setLeaveData(response?.data);
     }).catch((error) => {
-      if(error?.response){
+      if (error?.response) {
         console.log(error?.response?.data);
       }
     });
@@ -156,7 +205,7 @@ const DataProviderFuncComp = ({ children }) => {
         }
       }).then(async (response) => {
         setEmployeeMonthData(response.data);
-        
+
       }).catch((error) => {
         console.log(error);
       })
@@ -165,10 +214,21 @@ const DataProviderFuncComp = ({ children }) => {
     }
   }
 
+  const getBatchPageFunc = (query) => {
+    commonGetParamsApi('batch', query, setAddBatchPageObj);
+  }
 
-//   SSID (Service Set Identifier):
-// BSSID (Basic Service Set Identifier):
 
+  const getStudentPageFunc = (query) => {
+    commonGetParamsApi('student', query, setStudentPageObj);
+  }
+  const getStudentDisplayPageFunc = (query) => {
+    commonGetParamsApi('student', query, setDisplayStudentObj);
+  }
+  
+  const getBatchStudentById = (id)=>{
+    commonGetIdApi('student', id, setDisplayStudentObj);
+  }
 
   return (
     <DataContext.Provider
@@ -183,7 +243,14 @@ const DataProviderFuncComp = ({ children }) => {
         monthDataFunc,
         getProfileFunc,
         profileData,
-        employeeMonthData
+        employeeMonthData,
+        getBatchPageFunc,
+        addBatchPageObj,
+        getStudentPageFunc,
+        studentPageObj,
+        getBatchStudentById,
+        getStudentDisplayPageFunc,
+        displayStudentObj
       }}
     >
       {children}

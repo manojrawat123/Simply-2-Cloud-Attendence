@@ -162,6 +162,17 @@ const Home = () => {
                       My Details
                     </button>
                   </div>
+                  <div className="flex justify-center items-center py-4">
+                    <button
+                      type='button'
+                      onClick={() => {
+                        navigate(`/manage-batch`);
+                      }}
+                      className="bg-black w-full text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring transition duration-300"
+                    >
+                      Manage Batch
+                    </button>
+                  </div>
                 </div>
               </div>
 
