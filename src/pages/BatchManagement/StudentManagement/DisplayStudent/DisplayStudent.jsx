@@ -31,6 +31,8 @@ const DisplayStudent = () => {
         return <Loading />
     }
 
+    console.log(displayStudentObj);
+
     const updatedArr = displayStudentArr.map((element, index) => {
         if (element.type == "dynamicoption") {
             if (element.name == "batch_id") {

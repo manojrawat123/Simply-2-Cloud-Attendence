@@ -11,6 +11,7 @@ const CustomTabel = ({ topTableHeading, getFunc, tabelObj, query, EditModal, url
     return <Loading />
   }
 
+
   return (
     <div className='my-5 mx-4'>
       <>

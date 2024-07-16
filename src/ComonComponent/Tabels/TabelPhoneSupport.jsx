@@ -46,9 +46,9 @@ const TabelPhoneSupport = ({ row_data, topTableHeading, EditModal, url_route, ge
                                 <div className="border-b">
                                 </div>
                                 : element.display != false ? <div className="border-b">
-                                    {Array.isArray(row_data[element.name]) ? row_data[element.name].map((ar_el)=>{
-                                        return <>{ar_el} <br /></> ;
-                                    }) : row_data[element.name]}
+                               <NavLink to={element.link ? `${element.link.link}/${row_data.id}` : null} className={element.link ? 'text-blue-600 underline' : null}>
+                                 {row_data[element.name] }
+                                 </NavLink>   
                                 </div> : null}
                         </div>
                     </div>
