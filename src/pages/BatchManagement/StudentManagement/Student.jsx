@@ -15,11 +15,6 @@ const Student = () => {
             color: 'bg-blue-700'
         },
         {
-            title: 'Mark Attendence',
-            link: '/select-batch',
-            color: 'bg-black'
-        },
-        {
             title: 'Attendence Detail',
             link: '/select-batch-get',
             color: 'bg-black'
@@ -27,7 +22,7 @@ const Student = () => {
     ]
     return (
         <div>
-            <MenuButton buttonArr={buttonArr}/>
+            <MenuButton buttonArr={buttonArr} />
         </div>
     )
 }

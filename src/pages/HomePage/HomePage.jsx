@@ -103,6 +103,7 @@ const Home = () => {
   }
 
 
+
   return (
     <>
       <ToastContainer />
@@ -110,11 +111,11 @@ const Home = () => {
         <NoDataPage domain={"404 Error"} subdomain={"User Not Found"} /> :
         <>
           <div className='h-[100vh] bg-gray-200 flex items-center justify-center'>
-            <div className='h-[80%] w-[30rem] bg-white my-auto mx-auto p-4 rounded-xl'>
+            <div className='h-[80%] w-[30rem] bg-white my-auto mx-auto p-4 rounded-xl '>
               <div className='' style={{
               }}>
                 <HeadingO mainHeading={"Simply 2 Cloud"} subHeading={"Attendence App"} />
-                <div className='md:mx-0 md:my-0 mt-20 mb-4 mx-4'>
+                <div className='md:mx-0 md:my-0  mb-4 mx-4 overflow-auto h-[50vh]'>
                   <div className="flex justify-center items-center py-4">
                     {button &&
                       <div className="fixed inset-0 flex items-center justify-center bg-gray-900  bg-opacity-75">
@@ -171,6 +172,17 @@ const Home = () => {
                       className="bg-black w-full text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring transition duration-300"
                     >
                       Manage Batch
+                    </button>
+                  </div>
+                  <div className="flex justify-center items-center py-4">
+                    <button
+                      type='button'
+                      onClick={() => {
+                        navigate(`/select-batch`);
+                      }}
+                      className="bg-black w-full text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring transition duration-300"
+                    >
+                      Student Attendence
                     </button>
                   </div>
                 </div>
