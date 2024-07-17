@@ -52,9 +52,13 @@ const TabelSupport = ({ row_data, topTableHeading, EditModal, url_route, getFunc
               :
               element.display != false ? <td className="py-2 px-4 border-b"><NavLink to={element.link ? `${element.link.link}/${row_data.id}` : null} className={element.link ? 'text-blue-600 underline' : null}>
                 {Array.isArray(row_data[element.name]) ? row_data[element.name].map((ar_el, index) => {
-                  return <>{ar_el}{index + 1 != ar_el.length - 1 ? ", " : null}{index % 2 == 0 ? null : <br />}</>;
+                  return <>
+                    {ar_el}{index + 1 != ar_el.length - 1 ? ", " : null}{index % 2 == 0 ? null : <br />}
+                  </>;
                 }) : row_data[element.name]}
-              </NavLink>  </td> : null}</>
+              </NavLink>
+              </td> : null}
+          </>
         })}
       </tr>
     </>

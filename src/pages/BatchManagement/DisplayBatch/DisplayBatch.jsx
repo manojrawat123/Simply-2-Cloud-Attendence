@@ -8,21 +8,21 @@ import CustomEditModal from '../../../ComonComponent/EditForms/EditModal';
 
 const DisplayBatch = () => {
     const {
-        getBatchPageFunc,
-        addBatchPageObj
+        getBatchDisplayFunc,
+        batchDisplayObj
     } = useContext(DataContext);
 
     useEffect(() => {
-        getBatchPageFunc({query : "query"});
+        getBatchDisplayFunc({query : "query"});
     }, []);
 
-    if (!addBatchPageObj) {
+    if (!batchDisplayObj) {
         return <Loading />
     }
 
     return (
         <div>
-            <CustomTabel EditModal={CustomEditModal} getFunc={getBatchPageFunc} tabelObj={addBatchPageObj} topTableHeading={displayBatchArr} url_route={'batch'} title={'Batch Details'} />
+            <CustomTabel EditModal={CustomEditModal} getFunc={getBatchDisplayFunc} tabelObj={batchDisplayObj} topTableHeading={displayBatchArr} url_route={'batch'} title={'Batch Details'} />
         </div>
     )
 }

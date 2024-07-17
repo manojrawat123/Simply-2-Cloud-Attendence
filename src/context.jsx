@@ -12,17 +12,19 @@ const DataProviderFuncComp = ({ children }) => {
 
   const [checkinId, setCheckInId] = useState();
   const [attendenceObj, setAttendenceObj] = useState();
-  const [employeesDetail, setEmployeeDetail] = useState();
   const [employeeMonthData, setEmployeeMonthData] = useState();
   const [leaveData, setLeaveData] = useState();
   const [profileData, setProfileData] = useState();
   const [addBatchPageObj, setAddBatchPageObj] = useState();
+  const [batchDisplayObj, setbatchDisplayObj] = useState();
   const [studentPageObj, setStudentPageObj] = useState();
-  const [displayStudentObj , setDisplayStudentObj] = useState();
+  const [displayStudentObj, setDisplayStudentObj] = useState();
+  const [studentAttendencePageObj, setStudentAttendencePageObj] = useState();
+  const [studentAttendenceDisplayObj, setStudentAttendenceDisplayObj] = useState();
 
   const navigate = useNavigate();
 
-  const token = Cookies.getItem("accessToken");
+  const token = Cookies.getItem("accessToken"); 
 
   const handleErrorFunc = (error) => {
     console.log(error);
@@ -84,6 +86,56 @@ const DataProviderFuncComp = ({ children }) => {
     });
   }
 
+  const commonPostApiFunc = (route, data,setIsLoading, pageFunc= null, query = null)=>{
+    setIsLoading(true);
+    const token = Cookies.getItem('accessToken');
+    axios.post(`${API_BASE_URL}/${route}/`, data, {
+      headers : {
+        Authorization : `Bearer ${token}`
+      }
+    }).then((value)=>{
+      toast.success('Successfully Updated!!');
+      console.log(value);
+      if (pageFunc){
+        if (query){
+          pageFunc(query);
+        }
+        else{
+          pageFunc();
+        }
+      }
+    }).catch((err)=>{
+      handleErrorFunc();
+    }).finally(()=>{
+      setIsLoading(false);
+    })
+  }
+
+  const commonPutApiFunc = (route, id,data,setIsLoading, pageFunc= null, query = null)=>{
+    setIsLoading(true);
+    const token = Cookies.getItem('accessToken');
+    axios.put(`${API_BASE_URL}/${route}/${id}/`, data, {
+      headers : {
+        Authorization : `Bearer ${token}`
+      }
+    }).then((value)=>{
+      toast.success('Successfully Updated!!');
+      console.log(value);
+      if (pageFunc){
+        if (query){
+          pageFunc(query);
+        }
+        else{
+          pageFunc();
+        }
+      }
+    }).catch((err)=>{
+      handleErrorFunc();
+    }).finally(()=>{
+      setIsLoading(false);
+    })
+  }
+
   const commonGetIdApi = (route, id, setParamsData) => {
     setParamsData();
     const token = Cookies.getItem("accessToken");
@@ -115,13 +167,10 @@ const DataProviderFuncComp = ({ children }) => {
     });
   }
 
-
   const getCheckInId = () => {
     const value = Cookies.getItem("attendence_id");
     setCheckInId(value);
   };
-
-
 
   const logoutFunc = () => {
     Cookies.removeItem('token');
@@ -131,7 +180,6 @@ const DataProviderFuncComp = ({ children }) => {
     Cookies.removeItem('id');
     navigate("/login");
   }
-
 
   const getProfileFunc = async () => {
     setProfileData(null);
@@ -150,7 +198,6 @@ const DataProviderFuncComp = ({ children }) => {
       console.log(error);
     });
   }
-
 
   const getLeaveDetailFunc = async () => {
     setLeaveData(null);
@@ -218,15 +265,26 @@ const DataProviderFuncComp = ({ children }) => {
     commonGetParamsApi('batch', query, setAddBatchPageObj);
   }
 
+  const getBatchDisplayFunc = (query) => {
+    commonGetParamsApi('batch', query, setbatchDisplayObj);
+  }
 
   const getStudentPageFunc = (query) => {
     commonGetParamsApi('student', query, setStudentPageObj);
   }
+
   const getStudentDisplayPageFunc = (query) => {
     commonGetParamsApi('student', query, setDisplayStudentObj);
   }
-  
-  const getBatchStudentById = (id)=>{
+
+  const getStudentAttendencePageFunc = (query)=>{
+    commonGetParamsApi('studentattendence', query, setStudentAttendencePageObj);
+  }
+  const getStudentAttendenceDisplayFunc = (query)=>{
+    commonGetParamsApi('studentattendence', query, setStudentAttendenceDisplayObj);
+  }
+
+  const getBatchStudentById = (id) => {
     commonGetIdApi('student', id, setDisplayStudentObj);
   }
 
@@ -250,7 +308,15 @@ const DataProviderFuncComp = ({ children }) => {
         studentPageObj,
         getBatchStudentById,
         getStudentDisplayPageFunc,
-        displayStudentObj
+        displayStudentObj,
+        getBatchDisplayFunc,
+        batchDisplayObj,
+        getStudentAttendencePageFunc,
+        studentAttendencePageObj,
+        commonPostApiFunc,
+        commonPutApiFunc,
+        getStudentAttendenceDisplayFunc,
+        studentAttendenceDisplayObj
       }}
     >
       {children}
