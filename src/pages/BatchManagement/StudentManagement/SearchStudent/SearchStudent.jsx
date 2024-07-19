@@ -25,8 +25,8 @@ const SearchStudent = () => {
         {
             type: "option",
             name: "id",
-            placeholder: "Please Select Customer",
-            label: "Please Select Customer",
+            placeholder: "Please Select Batch",
+            label: "Please Select Batch",
             option: batchDisplayObj?.map((element, index) => {
                 return {
                     label: `${element.batch_name} - (${element.batch_start_timing.slice(0, 5)} - ${element.batch_end_timing.slice(0, 5)}) - ${element.teacher}`,
