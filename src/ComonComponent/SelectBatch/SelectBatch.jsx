@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import HeadingO from '../../component/CommonCmp/Heading/HeadingO';
 import Loading from '../../component/LoadingSpinner/LoadingSpinner';
 import { DataContext } from '../../context';
+import NoDataPage from '../../component/NoDataPage/NoDataPage';
 
 const SelectBatch = ({ route }) => {
 
@@ -29,7 +30,7 @@ const SelectBatch = ({ route }) => {
 
     const day = weakArr[new Date().getDay()];
 
-    const updatedArr = batchDisplayObj?.filter((element, index) => element.batch_days.includes(day))
+    const updatedArr = batchDisplayObj?.filter((element, index) => element.batch_days.includes(day));
 
     return (
         <div className='h-[100vh] bg-gray-200 flex items-center justify-center'>
@@ -39,7 +40,7 @@ const SelectBatch = ({ route }) => {
                     <HeadingO mainHeading={"Simply 2 Cloud"} subHeading={"Attendence App"} />
                     <HeadingO subHeading={"Select Batch"} />
                     <div className='md:mx-0 md:my-0 mb-4 mx-4 h-[50vh] overflow-auto'>
-                        {batchDisplayObj.map((element, index) => {
+                        {updatedArr.length != 0 ? batchDisplayObj.map((element, index) => {
                             return <div className='text-center border-2 rounded-xl my-4 mx-2 py-2 text-gray-700'
                                 onClick={() => {
                                     navigate(`/${route}/${element.id}`)
@@ -55,7 +56,7 @@ const SelectBatch = ({ route }) => {
                                     Teacher - ({element.teacher})
                                 </div>
                             </div>
-                        })}
+                        }) : <NoDataPage domain={"No Batch Avaliable for Today"} height={'h-[40vh]'} subdomain={"No Data Here!!"} />}
                     </div>
                 </div>
             </div>

@@ -24,8 +24,6 @@ const DataProviderFuncComp = ({ children }) => {
 
   const navigate = useNavigate();
 
-  const token = Cookies.getItem("accessToken"); 
-
   const handleErrorFunc = (error) => {
     console.log(error);
     if (error?.response) {

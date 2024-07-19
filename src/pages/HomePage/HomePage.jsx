@@ -182,7 +182,7 @@ const Home = () => {
                       }}
                       className="bg-black w-full text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring transition duration-300"
                     >
-                      Student Attendence
+                      Mark Student Attendence
                     </button>
                   </div>
                 </div>
