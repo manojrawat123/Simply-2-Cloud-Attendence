@@ -6,6 +6,7 @@ import CustomEditModal from '../../../../ComonComponent/EditForms/EditModal';
 // import addStudentArr from '../AddStudent/AddStudentArr';
 import displayStudentArr from './DisplayStudentArr';
 import { useParams } from 'react-router-dom';
+import NoDataPage from '../../../../component/NoDataPage/NoDataPage';
 
 const DisplayStudent = () => {
 
@@ -31,7 +32,6 @@ const DisplayStudent = () => {
         return <Loading />
     }
 
-    console.log(displayStudentObj);
 
     const updatedArr = displayStudentArr.map((element, index) => {
         if (element.type == "dynamicoption") {
@@ -39,7 +39,7 @@ const DisplayStudent = () => {
                 element['option'] = displayStudentObj?.batch?.map((u_el, index) => {
                     console.log(u_el);
                     return {
-                        'label': `${u_el.batch_name} - ${u_el.assigned_to} (${u_el.batch_start_timing?.slice(0,5)} to ${u_el.batch_end_timing?.slice(0, 5)})`,
+                        'label': `${u_el.batch_name} - ${u_el.assigned_to} (${u_el.batch_start_timing?.slice(0, 5)} to ${u_el.batch_end_timing?.slice(0, 5)})`,
                         'value': u_el.id
                     }
                 })
@@ -50,7 +50,7 @@ const DisplayStudent = () => {
 
     return (
         <div>
-            <CustomTabel
+            {displayStudentObj.student.length != 0 ? <CustomTabel
                 EditModal={CustomEditModal}
                 getFunc={getStudentDisplayPageFunc}
                 query={{ query: 'query' }}
@@ -58,7 +58,11 @@ const DisplayStudent = () => {
                 title={"Student List"}
                 topTableHeading={updatedArr}
                 url_route={'student'}
-            />
+            /> :
+                <div className='pt-20'>
+                    <NoDataPage domain={"No Student Added"} height={"50vh"} subdomain={"No Data Here"} />
+                </div>
+            }
         </div>
     )
 }

@@ -30,7 +30,7 @@ const SelectBatch = ({ route }) => {
 
     const day = weakArr[new Date().getDay()];
 
-    const updatedArr = batchDisplayObj?.filter((element, index) => element.batch_days.includes(day));
+    const updatedArr = route = "select-batch" ? batchDisplayObj?.filter((element, index) => element.batch_days.includes(day)) : batchDisplayObj;
 
     return (
         <div className='h-[100vh] bg-gray-200 flex items-center justify-center'>
