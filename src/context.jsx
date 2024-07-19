@@ -278,6 +278,7 @@ const DataProviderFuncComp = ({ children }) => {
   const getStudentAttendencePageFunc = (query)=>{
     commonGetParamsApi('studentattendence', query, setStudentAttendencePageObj);
   }
+  
   const getStudentAttendenceDisplayFunc = (query)=>{
     commonGetParamsApi('studentattendence', query, setStudentAttendenceDisplayObj);
   }

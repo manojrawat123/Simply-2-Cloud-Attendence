@@ -24,6 +24,7 @@ import SelectBatchPost from './pages/BatchManagement/StudentManagement/StudentAt
 import SelectBatchGet from './pages/BatchManagement/StudentManagement/StudentAttendence/DisplayAttendence/SelectBatchGet/SelectBatchGet';
 import DisplayAttendenceStu from './pages/BatchManagement/StudentManagement/StudentAttendence/DisplayAttendence/DisplayAttendenceStu';
 import ResetPassword from './component/ResetPassword/ResetPassword';
+import SearchStudent from './pages/BatchManagement/StudentManagement/SearchStudent/SearchStudent';
 
 
 function App() {
@@ -100,7 +101,7 @@ function App() {
           </Route>
 
           <Route path='' Component={ProtectedRoutes} >
-            <Route path='/display-student' Component={DisplayStudent} />
+            <Route path='/display-student' Component={SearchStudent} />
           </Route>
 
           <Route path='' Component={ProtectedRoutes} >

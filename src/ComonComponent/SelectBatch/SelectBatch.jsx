@@ -22,9 +22,6 @@ const SelectBatch = ({ route }) => {
         return <Loading />
     }
 
-    /*
-    'ye aakh ye palke ye nighe mil jaye kudha to mai le lu balaye'
-    */
 
     const weakArr = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
