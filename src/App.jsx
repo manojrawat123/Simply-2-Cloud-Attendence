@@ -23,6 +23,8 @@ import StudentAttendence from './pages/BatchManagement/StudentManagement/Student
 import SelectBatchPost from './pages/BatchManagement/StudentManagement/StudentAttendence/SelectBatchPost/SelectBatchPost';
 import SelectBatchGet from './pages/BatchManagement/StudentManagement/StudentAttendence/DisplayAttendence/SelectBatchGet/SelectBatchGet';
 import DisplayAttendenceStu from './pages/BatchManagement/StudentManagement/StudentAttendence/DisplayAttendence/DisplayAttendenceStu';
+import ResetPassword from './component/ResetPassword/ResetPassword';
+
 
 function App() {
 
@@ -123,6 +125,7 @@ function App() {
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/display-student/:id' Component={DisplayStudent} />
           </Route>
+        <Route path="/reset-password/:userid_encode/:verify_token/" Component={ResetPassword} />
 
         </Routes>
       </div>

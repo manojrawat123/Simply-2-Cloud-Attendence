@@ -7,10 +7,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import Cookies from "js-cookies";
 import { DataContext } from '../../context';
 import { API_BASE_URL } from '../../config';
+import ForgotPasswordModel from '../ForgotPassword/ForgotPasswordModel';
 
 const LoginPage = () => {
   const [loginButton, setLoginButton] = useState(false);
   const { handleErrorFunc } = useContext(DataContext);
+const [forgotPassword , setForgotPassword] = useState(false);
+
   const navigate = useNavigate();
 
   const loginFunc = (e) => {
@@ -25,7 +28,7 @@ const LoginPage = () => {
         Cookies.setItem("id", `${res.data?.user.id}`);
         Cookies.setItem("user", JSON.stringify(res.data?.user));
         console.log("hii");
-       navigate("/");
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
@@ -39,6 +42,7 @@ const LoginPage = () => {
   return (
     <>
       <ToastContainer />
+      {forgotPassword ? <ForgotPasswordModel forgotPassword={forgotPassword} setForgotPassword={setForgotPassword} /> : null}
       <section className="gradient-form h-[100vh] bg-neutral-200  dark:bg-neutral-700">
         <div className=" h-full p-10">
           <div className="flex h-full flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200 md:w-[55%] mx-auto">
@@ -49,7 +53,7 @@ const LoginPage = () => {
                   <div className="md:mx-6 md:p-12">
                     {/* Logo */}
                     <div className="text-center mt-4">
-                     <h1 className='font-bold text-gray-700 md:text-2xl text-xl'>S2C Attendence</h1>
+                      <h1 className='font-bold text-gray-700 md:text-2xl text-xl'>S2C Attendence</h1>
                     </div>
                     <form onSubmit={loginFunc}>
                       {/* Username input */}
@@ -81,23 +85,43 @@ const LoginPage = () => {
                           {loginButton ? <CircularProgress size={19} color='inherit' /> : "Login"}
                         </button>
                       </div>
-                      <div className="mb-12 pb-1 pt-1 text-center">
+                      {/* End of Loading Button */}
+                      <div className=" pb-1 pt-1 text-center">
                         <button
-                          className={`mb-3 inline-block w-full bg-black rounded px-6 pb-2 pt-2.5 font-semibold mt-5 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
+                          // className={`mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold mt-5 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
+                          className='text-blue-500 underline'
                           type="button"
-                          onClick={()=>{
-                            navigate('/register')
-                          }}
                           data-te-ripple-init
                           data-te-ripple-color="light"
                           style={{
-                            background: "black",
+                            // background: "black",
+                          }}
+                          onClick={() => {
+                            setForgotPassword(true);
                           }}
                         >
-                          {"Register Now"}
+                          {"Forgot Password? "}
                         </button>
                       </div>
-                      {/* End of Loading Button */}
+                      <hr />
+                      <div className="mt-4 pb-1 pt-1 text-center">
+                        <button
+                          // className={`mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold mt-5 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
+                          type="button"
+                          data-te-ripple-init
+                          data-te-ripple-color="light"
+                          style={{
+                            // background: "black",
+                          }}
+
+                        >
+                          <span>Don't have an account?</span> <button
+                            onClick={() => {
+                              navigate('/register')
+                            }}
+                            className='text-blue-500 underline'>{"SignUp"}</button>
+                        </button>
+                      </div>
                     </form>
                   </div>
                 </div>
