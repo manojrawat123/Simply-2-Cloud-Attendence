@@ -31,7 +31,7 @@ const AttendencePending = ({ setIsLoading, studentAttendencePageObj, pageFunc, q
                     setStudentArr(selectedValues);
                 }}
             />
-            <NormalButton color={'bg-black'} title={"Mark Attendence"}
+            <NormalButton color={'bg-black'} title={"Mark Present"}
                 // button={markButton} 
                 func={() => {
                     // setIsLoading(true);
