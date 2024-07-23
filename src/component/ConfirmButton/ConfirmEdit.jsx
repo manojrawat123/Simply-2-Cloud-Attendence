@@ -5,11 +5,15 @@ import { API_BASE_URL } from '../../config';
 import { toast } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
 import { DataContext } from '../../context';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-const EditConfirm = ({ id, url_route, getFunc, query, setConfirmEdit, setIsModalOpen, editData }) => {
+const EditConfirm = ({ id: props_id, url_route, getFunc, query, setConfirmEdit, setIsModalOpen, editData }) => {
 
   const { isValidSessionFunc } = useContext(DataContext);
   const [button, setButton] = useState(false);
+  const location = useLocation();
+  const { id: url_id } = useParams();
+  const navigate = useNavigate();
 
   return (
     <div className="fixed inset-3 flex items-center justify-center bg-gray-900  bg-opacity-75 z-40">
@@ -21,21 +25,28 @@ const EditConfirm = ({ id, url_route, getFunc, query, setConfirmEdit, setIsModal
             type='button'
             onClick={() => {
               setButton(true);
-              
               const token = Cookies.getItem("accessToken");
-
-              axios.put(`${API_BASE_URL}/${url_route}/${id}/`, editData, {
+              axios.put(`${API_BASE_URL}/${url_route}/${props_id}/`, editData, {
                 headers: {
                   Authorization: `Bearer ${token}`
                 }
               }).then((res) => {
                 toast.success("Updated Successfully!!", { position: "top-center" });
-                if (query) {
+                if (location.pathname.startsWith('/display-student/')) {
+                  if (!url_id) {
+                    navigate('/display-student');
+                  }
+                  else {
+                    getFunc(url_id);
+                  }
+                }
+                else if (query) {
                   getFunc(query);
                 }
                 else {
                   getFunc();
                 }
+
                 setConfirmEdit(false);
                 setIsModalOpen(false);
               }).catch((error) => {

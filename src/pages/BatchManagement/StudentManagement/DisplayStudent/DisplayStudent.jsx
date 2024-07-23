@@ -19,7 +19,6 @@ const DisplayStudent = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        console.log(id);
         if (id) {
             getBatchStudentById(id);
         }
@@ -50,9 +49,9 @@ const DisplayStudent = () => {
 
     return (
         <div>
-            {displayStudentObj.student.length != 0 ? <CustomTabel
+            {displayStudentObj?.student?.length != 0 ? <CustomTabel
                 EditModal={CustomEditModal}
-                getFunc={getStudentDisplayPageFunc}
+                getFunc={getBatchStudentById}
                 query={{ query: 'query' }}
                 tabelObj={displayStudentObj.student}
                 title={"Student List"}

@@ -32,7 +32,7 @@ const SearchStudent = () => {
                     label: `${element.batch_name} - (${element.batch_start_timing.slice(0, 5)} - ${element.batch_end_timing.slice(0, 5)}) - ${element.teacher}`,
                     value: element.id
                 };
-            }),
+            }), 
             icon: <Person className={iconCss} />
         },
     ];
