@@ -11,15 +11,12 @@ import Cookies from "js-cookies";
 import { DataContext } from '../../context';
 import Select from "react-select";
 
-const CustomForms = ({ fieldsArr, route_name, title, pageFunc, query }) => {
+const CustomForms = ({ fieldsArr, route_name, title, pageFunc, query, toastMessage }) => {
     const validationSchema = generateValidationSchema(fieldsArr);
     const initialValues = genrateInitalValues(fieldsArr);
     const [button, setButton] = useState(false);
     const { handleErrorFunc } = useContext(DataContext);
     const navigate = useNavigate();
-    const [maxDisputeAmount, setMaxDisputeAmount] = useState(0);
-    const [selectedUser, setSelectedUser] = useState([]);
-    const [selectedCustomer, setCustomerOption] = useState([]);
     const [fromDataTransferUser, setFromDataTransferUser] = useState();
     const selectRef = useRef();
     const handleSubmit = (values, { resetForm }) => {
@@ -30,16 +27,21 @@ const CustomForms = ({ fieldsArr, route_name, title, pageFunc, query }) => {
                 Authorization: `Bearer ${token}`
             }
         }).then((value) => {
-            toast.success("Successfully Updated", {
+            toast.success(toastMessage ? toastMessage : "Successfully Updated", {
                 position: "top-center"
             });
-            if (pageFunc) {
-                if (query){
-                    pageFunc(query);
+            try {
+                if (pageFunc) {
+                    if (query) {
+                        pageFunc(query);
+                    }
+                    else {
+                        pageFunc();
+                    }
                 }
-                else{
-                    pageFunc();
-                }
+            }
+            catch (err) {
+                console.log(err);
             }
             resetForm();
         }).catch((err) => {
@@ -67,7 +69,7 @@ const CustomForms = ({ fieldsArr, route_name, title, pageFunc, query }) => {
                                     {fieldsArr?.map((element, index) => {
                                         return (
                                             <div className='' key={index}>
-                                                <h4 className="text-gray-700 mb-2">{element.placeholder} <span className="text-red-500">*</span></h4>
+                                                <h4 className="text-gray-700 mb-2">{element.placeholder} {element.required ? <span className="text-red-500">*</span> : null}</h4>
                                                 <div className={"w-full relative col-span-1 "}>
                                                     {["dynamicoption", "option", "select", 'array'].includes(element.type) ?
                                                         <>
@@ -92,6 +94,16 @@ const CustomForms = ({ fieldsArr, route_name, title, pageFunc, query }) => {
                                                                         placeholder={element.placeholder}
                                                                         required
                                                                         className="pl-9 w-full py-2 peer px-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                                                        onChange={(e)=>{
+                                                                            if (element.name == "template_id"){
+                                                                                const template_obj = element.option.find((o_el)=>o_el.value == e.target.value);
+                                                                                console.log(template_obj);
+                                                                                setFieldValue('subject', template_obj.data.subject);
+                                                                                setFieldValue('body',template_obj.data.template_body);
+                                                                                setFieldValue('signature',template_obj.data.signature);
+                                                                            }
+                                                                            setFieldValue(element.name, e.target.value);
+                                                                        }}
                                                                     >
                                                                         <option value="">Please Select</option>
                                                                         {
@@ -105,13 +117,14 @@ const CustomForms = ({ fieldsArr, route_name, title, pageFunc, query }) => {
                                                         :
                                                         <>
                                                             {element.icon}
-                                                            <Field
+                                                            {<Field
+                                                            as={element.type == "textarea" ? "textarea" : null}
                                                                 type={!element.type || element.type == "number" ? "text" : element.type}
                                                                 name={element.name}
                                                                 placeholder={element.placeholder}
-                                                                required
+                                                                required={element.required ? true : false}
                                                                 className="pl-9 w-full py-2 peer px-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600"
-                                                            />
+                                                            />}
                                                         </>
                                                     }
                                                 </div>

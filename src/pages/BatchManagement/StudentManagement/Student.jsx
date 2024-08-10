@@ -19,6 +19,11 @@ const Student = () => {
             link: '/select-batch-get',
             color: 'bg-black'
         },
+        {
+            title: 'Send Email',
+            link: '/send-mail-to-student',
+            color: 'bg-black'
+        },
     ]
     return (
         <div>

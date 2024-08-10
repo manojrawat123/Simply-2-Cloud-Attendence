@@ -25,6 +25,7 @@ import SelectBatchGet from './pages/BatchManagement/StudentManagement/StudentAtt
 import DisplayAttendenceStu from './pages/BatchManagement/StudentManagement/StudentAttendence/DisplayAttendence/DisplayAttendenceStu';
 import ResetPassword from './component/ResetPassword/ResetPassword';
 import SearchStudent from './pages/BatchManagement/StudentManagement/SearchStudent/SearchStudent';
+import SendMail from './pages/SendMail/SendMail';
 
 
 function App() {
@@ -121,6 +122,9 @@ function App() {
           
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/student-attendence-display/:id' Component={DisplayAttendenceStu} />
+          </Route>
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='/send-mail-to-student' Component={SendMail} />
           </Route>
 
           <Route path='' Component={ProtectedRoutes} >

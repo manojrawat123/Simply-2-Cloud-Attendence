@@ -21,6 +21,7 @@ const DataProviderFuncComp = ({ children }) => {
   const [displayStudentObj, setDisplayStudentObj] = useState();
   const [studentAttendencePageObj, setStudentAttendencePageObj] = useState();
   const [studentAttendenceDisplayObj, setStudentAttendenceDisplayObj] = useState();
+  const [sendEmailPageObj, setSendEmailPageObj] = useState();
 
   const navigate = useNavigate();
 
@@ -94,16 +95,22 @@ const DataProviderFuncComp = ({ children }) => {
     }).then((value)=>{
       toast.success('Successfully Updated!!');
       console.log(value);
-      if (pageFunc){
-        if (query){
-          pageFunc(query);
-        }
-        else{
-          pageFunc();
+      try{
+
+        if (pageFunc){
+          if (query){
+            pageFunc(query);
+          }
+          else{
+            pageFunc();
+          }
         }
       }
+      catch(error){
+        console.log(error);
+      }
     }).catch((err)=>{
-      handleErrorFunc();
+      handleErrorFunc(err);
     }).finally(()=>{
       setIsLoading(false);
     })
@@ -287,6 +294,10 @@ const DataProviderFuncComp = ({ children }) => {
     commonGetIdApi('student', id, setDisplayStudentObj);
   }
 
+  const sendMailPageFunc = (query)=>{
+    commonGetParamsApi('sendmail', query,setSendEmailPageObj )
+  }
+
   return (
     <DataContext.Provider
       value={{
@@ -315,7 +326,9 @@ const DataProviderFuncComp = ({ children }) => {
         commonPostApiFunc,
         commonPutApiFunc,
         getStudentAttendenceDisplayFunc,
-        studentAttendenceDisplayObj
+        studentAttendenceDisplayObj,
+        sendMailPageFunc,
+        sendEmailPageObj
       }}
     >
       {children}

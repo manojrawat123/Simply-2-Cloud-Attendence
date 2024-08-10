@@ -36,7 +36,14 @@ const AddStudent = () => {
 
     return (
         <div>
-            <CustomForms fieldsArr={updatedArr} pageFunc={getStudentPageFunc} query={{page : 'page'}} route_name={'student'} title={"Add Student"} />
+            <CustomForms fieldsArr={updatedArr} pageFunc={getStudentPageFunc} query={{
+                page : 'page'
+            }} route_name={
+                'student'
+            } title={
+                "Add Student"
+            } 
+        />
         </div>
     )
 }

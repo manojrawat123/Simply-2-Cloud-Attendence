@@ -13,13 +13,12 @@ const DisplayAttendenceStu = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        getStudentAttendenceDisplayFunc({ page: 'attendenceget', batch: id });
+        getStudentAttendenceDisplayFunc({ page: 'attendenceget', batch : id });
     }, []);
 
     if (!studentAttendenceDisplayObj) {
         return <Loading />
     }
-
 
     return (
         <div className='h-[100vh] bg-gray-200 flex items-center justify-center'>
@@ -43,12 +42,12 @@ const DisplayAttendenceStu = () => {
                                     </div>
                                     <div>
                                         <span className='font-bold'>
-                                      Absent
-                                            </span> 
+                                            Absent
+                                        </span>
                                         - {element.absent}
                                     </div>
                                     <div>
-                                       Attendence {(element.present * 100 )/ element.total_days} %
+                                        Attendence {(element.present * 100) / element.total_days} %
                                     </div>
                                 </div>
 

@@ -10,13 +10,13 @@ import Toast from 'react-native-toast-message'; // Toast component, replace if n
 import LoadingSpinner from '../../component/LoadingSpinner/LoadingSpinner';
 
 const ProfilePage = () => {
-    const { 
+    const {
         checkinId,
         getCheckInId,
         showErrorToast,
         showSuccessToast,
         handleErrorFunc,
-        setAttendenceObj 
+        setAttendenceObj
     } = useContext(DataContext);
     const [button, setButton] = useState(false);
     const [position, setPosition] = useState();
@@ -32,16 +32,16 @@ const ProfilePage = () => {
         fetchData();
     }, []);
 
-  const getPermissions = async () => {
-    try {
-      const currentLocation = await new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject);
-      });
-      setPosition(currentLocation);
-    } catch (error) {
-      console.error('Error getting location:', error);
-    }
-  };
+    const getPermissions = async () => {
+        try {
+            const currentLocation = await new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(resolve, reject);
+            });
+            setPosition(currentLocation);
+        } catch (error) {
+            console.error('Error getting location:', error);
+        }
+    };
 
     const checkInFunc = async () => {
         setButton(true);
