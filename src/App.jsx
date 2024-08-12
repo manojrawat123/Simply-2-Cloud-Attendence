@@ -26,6 +26,7 @@ import DisplayAttendenceStu from './pages/BatchManagement/StudentManagement/Stud
 import ResetPassword from './component/ResetPassword/ResetPassword';
 import SearchStudent from './pages/BatchManagement/StudentManagement/SearchStudent/SearchStudent';
 import SendMail from './pages/SendMail/SendMail';
+import UpdateProfile from './pages/Profile/Profile';
 
 
 function App() {
@@ -38,11 +39,9 @@ function App() {
     <>
 
       <div className=''>
-
         {
           location.pathname !== "/" && location.pathname !== "/login" && location.pathname !== "/register" ?
             <div className='fixed h-[2rem] w-[2rem] py-3 '>
-
               <button onClick={() => {
                 navigate(-1)
               }} className='flex bg-black shadow-md text-white py-2 px-4 rounded mx-4'>
@@ -54,81 +53,68 @@ function App() {
         <Routes>
           {/* Unauthenticated routes */}
           <Route path='/login' Component={LoginPage} />
-          
           <Route path='/register' Component={Register} />
-          
           <Route path='' Component={ProtectedRoutes} >
             <Route path='' Component={Home} />
           </Route>
-
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/oneleave' Component={TakeOneLeave} />
           </Route>
-          
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/manageleaves' Component={ManageLeaves} />
           </Route>
-          
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/customleave' Component={TakeLeave} />
           </Route>
-          
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/leavedetails' Component={LeaveDisplay} />
           </Route>
-          
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/mydetail/:id' Component={AttendanceScreen} />
           </Route>
-          
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/attendence/:id/:month' Component={EmployeeMonthData} />
           </Route>
-
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/manage-batch' Component={Batch} />
           </Route>
-
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/add-batch' Component={AddBatch} />
           </Route>
-          
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/display-batch' Component={DisplayBatch} />
           </Route>
-          
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/add-student' Component={AddStudent} />
           </Route>
-
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/display-student' Component={SearchStudent} />
           </Route>
-
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/manage-student' Component={Student} />
           </Route>
-          
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/select-batch' Component={SelectBatchPost} />
           </Route>
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/select-batch-get' Component={SelectBatchGet} />
           </Route>
-          
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/student-attendence/:id' Component={StudentAttendence} />
           </Route>
-          
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/student-attendence-display/:id' Component={DisplayAttendenceStu} />
           </Route>
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/send-mail-to-student' Component={SendMail} />
           </Route>
-
+          
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/display-student/:id' Component={DisplayStudent} />
+          </Route>
+
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='/update-profile/' Component={UpdateProfile} />
           </Route>
         <Route path="/reset-password/:userid_encode/:verify_token/" Component={ResetPassword} />
 

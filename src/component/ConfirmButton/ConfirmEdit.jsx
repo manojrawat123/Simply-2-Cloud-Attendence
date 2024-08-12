@@ -48,7 +48,9 @@ const EditConfirm = ({ id: props_id, url_route, getFunc, query, setConfirmEdit, 
                 }
 
                 setConfirmEdit(false);
-                setIsModalOpen(false);
+                if (setIsModalOpen){
+                  setIsModalOpen(false);
+                }
               }).catch((error) => {
                 console.log(error);
                 // isValidSessionFunc();

@@ -94,13 +94,12 @@ const CustomForms = ({ fieldsArr, route_name, title, pageFunc, query, toastMessa
                                                                         placeholder={element.placeholder}
                                                                         required
                                                                         className="pl-9 w-full py-2 peer px-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600"
-                                                                        onChange={(e)=>{
-                                                                            if (element.name == "template_id"){
-                                                                                const template_obj = element.option.find((o_el)=>o_el.value == e.target.value);
-                                                                                console.log(template_obj);
-                                                                                setFieldValue('subject', template_obj.data.subject);
-                                                                                setFieldValue('body',template_obj.data.template_body);
-                                                                                setFieldValue('signature',template_obj.data.signature);
+                                                                        onChange={(e) => {
+                                                                            if (element.name == "template_id") {
+                                                                                const template_obj = element.option.find((o_el) => o_el.value == e.target.value);
+                                                                                setFieldValue('subject', template_obj?.data?.subject ? template_obj.data.subject : '');
+                                                                                setFieldValue('body', template_obj?.data?.template_body ?template_obj.data.template_body : '');
+                                                                                setFieldValue('signature', template_obj?.data?.signature ?  template_obj.data.signature : '');
                                                                             }
                                                                             setFieldValue(element.name, e.target.value);
                                                                         }}
@@ -118,7 +117,7 @@ const CustomForms = ({ fieldsArr, route_name, title, pageFunc, query, toastMessa
                                                         <>
                                                             {element.icon}
                                                             {<Field
-                                                            as={element.type == "textarea" ? "textarea" : null}
+                                                                as={element.type == "textarea" ? "textarea" : null}
                                                                 type={!element.type || element.type == "number" ? "text" : element.type}
                                                                 name={element.name}
                                                                 placeholder={element.placeholder}

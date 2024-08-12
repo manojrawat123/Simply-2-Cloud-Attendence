@@ -7,16 +7,15 @@ const ProtectedRoutes = () => {
 
   const navigate = useNavigate();
 
-    useEffect(()=>{
-        if (!Cookies.getItem('accessToken') || !Cookies.getItem("user") == "user"){
-            navigate("/login");
-        }
-    },[]);
-
-    if (!Cookies.getItem('accessToken') || !Cookies.getItem("user") == "user"){
-      navigate('/login');
+  useEffect(() => {
+    if (!Cookies.getItem('accessToken') || !Cookies.getItem("user") == "user") {
+      navigate("/login");
     }
+  }, []);
 
+  if (!Cookies.getItem('accessToken') || !Cookies.getItem("user") == "user") {
+    navigate('/login');
+  }
 
   return (
     <Outlet />

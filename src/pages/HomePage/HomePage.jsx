@@ -145,6 +145,16 @@ const Home = () => {
                   <div className="flex justify-center items-center py-4">
                     <button
                       onClick={() => {
+                        navigate("/update-profile");
+                      }}
+                      className="w-full bg-gradient-to-r from-green-700 to-green-800 hover:from-green-900 hover:to-green-500 text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300"
+                    >
+                      Profile
+                    </button>
+                  </div>
+                  <div className="flex justify-center items-center py-4">
+                    <button
+                      onClick={() => {
                         navigate("/manageleaves");
                       }}
                       className="w-full bg-gradient-to-r from-green-700 to-green-800 hover:from-green-900 hover:to-green-500 text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300"
@@ -160,7 +170,7 @@ const Home = () => {
                       }}
                       className="bg-black w-full text-white font-semibold py-3 px-6 rounded shadow-lg focus:outline-none focus:ring transition duration-300"
                     >
-                      My Details
+                      My Attendence Details
                     </button>
                   </div>
                   <div className="flex justify-center items-center py-4">

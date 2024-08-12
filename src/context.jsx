@@ -194,11 +194,8 @@ const DataProviderFuncComp = ({ children }) => {
         "Authorization": `Bearer ${token}`
       },
     }).then(async (response) => {
-      console.log(response);
       setProfileData(response?.data);
-      console.log("profile Func");
     }).catch((error) => {
-      console.log("hii")
       logoutFunc();
       console.log(error);
     });

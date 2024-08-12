@@ -35,8 +35,8 @@ const EditForms = ({ row_data, setIsModalOpen, topTableHeading, getFunc, url_rou
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm }) => {
-                    setEditData(values)
-                    setConfirmEdit(true)
+                    setEditData(values);
+                    setConfirmEdit(true);
                 }}
             >
                 {({

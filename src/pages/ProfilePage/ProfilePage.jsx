@@ -127,8 +127,7 @@ const ProfilePage = () => {
                         // Adjust navigation logic for web
                     }} width={"100%"} />
                     <Btn3 textColor={"white"} btnLabel="My Detail" Press={() => {
-                        setAttendenceObj(false)
-                        // Adjust navigation logic for web
+                        setAttendenceObj(false);
                     }} width={"100%"} />
                     {employee.is_superuser ? <Btn3 textColor={"white"} btnLabel="Employee Detail" Press={() => {
                         // Adjust navigation logic for web
