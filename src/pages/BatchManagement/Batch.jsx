@@ -11,7 +11,7 @@ const Batch = () => {
         },
         {
             title: 'Batch Details',
-            link: '/display-batch',
+            link: '/search-batch?query=display-batch',
             color: 'bg-black'
         },
         {

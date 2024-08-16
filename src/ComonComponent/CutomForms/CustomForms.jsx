@@ -12,6 +12,7 @@ import { DataContext } from '../../context';
 import Select from "react-select";
 
 const CustomForms = ({ fieldsArr, route_name, title, pageFunc, query, toastMessage }) => {
+
     const validationSchema = generateValidationSchema(fieldsArr);
     const initialValues = genrateInitalValues(fieldsArr);
     const [button, setButton] = useState(false);
@@ -24,10 +25,11 @@ const CustomForms = ({ fieldsArr, route_name, title, pageFunc, query, toastMessa
         const token = Cookies.getItem("accessToken");
         axios.post(`${API_BASE_URL}/${route_name}/`, { ...values, fromDataTransferUser }, {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization : `Bearer ${token}`
             }
         }).then((value) => {
-            toast.success(toastMessage ? toastMessage : "Successfully Updated", {
+            toast.success(toastMessage
+                 ? toastMessage : "Successfully Updated", {
                 position: "top-center"
             });
             try {
@@ -98,8 +100,8 @@ const CustomForms = ({ fieldsArr, route_name, title, pageFunc, query, toastMessa
                                                                             if (element.name == "template_id") {
                                                                                 const template_obj = element.option.find((o_el) => o_el.value == e.target.value);
                                                                                 setFieldValue('subject', template_obj?.data?.subject ? template_obj.data.subject : '');
-                                                                                setFieldValue('body', template_obj?.data?.template_body ?template_obj.data.template_body : '');
-                                                                                setFieldValue('signature', template_obj?.data?.signature ?  template_obj.data.signature : '');
+                                                                                setFieldValue('body', template_obj?.data?.template_body ? template_obj.data.template_body : '');
+                                                                                setFieldValue('signature', template_obj?.data?.signature ? template_obj.data.signature : '');
                                                                             }
                                                                             setFieldValue(element.name, e.target.value);
                                                                         }}

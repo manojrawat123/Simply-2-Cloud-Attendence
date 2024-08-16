@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Background from '../../component/Background';
-import Btn, { Btn3 } from '../../component/Btn'; // Custom Button components, replace if necessary
-import { darkGreen, green } from '../../component/Constants'; // Constants, replace if necessary
+import Btn, { Btn3 } from '../../component/Btn';
+import { darkGreen, green } from '../../component/Constants';
 import axios from 'axios';
 import { API_BASE_URL } from '../../config';
-import AsyncStorage from 'react-native'; // Replace with appropriate web local storage solution
+import AsyncStorage from 'react-native';
 import { DataContext } from '../../context';
-import Toast from 'react-native-toast-message'; // Toast component, replace if necessary
+import Toast from 'react-native-toast-message';
 import LoadingSpinner from '../../component/LoadingSpinner/LoadingSpinner';
 
 const ProfilePage = () => {

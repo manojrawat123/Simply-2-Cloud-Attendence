@@ -49,18 +49,19 @@ const DisplayStudent = () => {
 
     return (
         <div>
-            {displayStudentObj?.student?.length != 0 ? <CustomTabel
-                EditModal={CustomEditModal}
-                getFunc={getBatchStudentById}
-                query={{ query: 'query' }}
-                tabelObj={displayStudentObj.student}
-                title={"Student List"}
-                topTableHeading={updatedArr}
-                url_route={'student'}
-            /> :
-                <div className='pt-20'>
-                    <NoDataPage domain={"No Student Added"} height={"50vh"} subdomain={"No Data Here"} />
-                </div>
+            {
+                displayStudentObj?.student?.length != 0 ? <CustomTabel
+                    EditModal={CustomEditModal}
+                    getFunc={getBatchStudentById}
+                    query={{ query: 'query' }}
+                    tabelObj={displayStudentObj.student}
+                    title={"Student List"}
+                    topTableHeading={updatedArr}
+                    url_route={'student'}
+                /> :
+                    <div className='pt-20'>
+                        <NoDataPage domain={"No Student Added"} height={"50vh"} subdomain={"No Data Here"} />
+                    </div>
             }
         </div>
     )

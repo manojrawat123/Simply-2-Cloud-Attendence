@@ -5,7 +5,9 @@ const SelectBatchPost = () => {
   
   return (
     <div>
-      <SelectBatch route={"student-attendence"}/>
+      <SelectBatch 
+        route={"student-attendence"}
+    />
     </div>
   )
 }

@@ -16,7 +16,7 @@ const Student = () => {
         },
         {
             title: 'Attendence Detail',
-            link: '/select-batch-get',
+            link: '/search-batch?query=select-batch-get',
             color: 'bg-black'
         },
         {

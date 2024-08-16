@@ -10,8 +10,6 @@ const UpdateProfile = () => {
 
     const { profileData, getProfileFunc } = useContext(DataContext);
 
-    
-
     useEffect(()=>{
         getProfileFunc();
     }, []);

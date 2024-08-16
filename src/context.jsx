@@ -12,6 +12,7 @@ const DataProviderFuncComp = ({ children }) => {
 
   const [checkinId, setCheckInId] = useState();
   const [attendenceObj, setAttendenceObj] = useState();
+  const [employeesDetail, setEmployeeDetail] = useState();
   const [employeeMonthData, setEmployeeMonthData] = useState();
   const [leaveData, setLeaveData] = useState();
   const [profileData, setProfileData] = useState();
@@ -83,6 +84,24 @@ const DataProviderFuncComp = ({ children }) => {
     }).catch((err) => {
       handleErrorFunc(err);
     });
+  }
+
+  const getUserAdmin = async () => {
+    try {
+      const token = Cookies.getItem('accessToken');
+      axios.get(`${API_BASE_URL}/get_employee_detail/`, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      }).then(async (response) => {
+        setEmployeeDetail(response.data)
+      }).catch((error) => {
+        console.log(error)
+      })
+    } catch (error) {
+      handleErrorFunc(error);
+      setButton(false);
+    }
   }
 
   const commonPostApiFunc = (route, data,setIsLoading, pageFunc= null, query = null)=>{
@@ -325,7 +344,9 @@ const DataProviderFuncComp = ({ children }) => {
         getStudentAttendenceDisplayFunc,
         studentAttendenceDisplayObj,
         sendMailPageFunc,
-        sendEmailPageObj
+        sendEmailPageObj,
+        employeesDetail,
+        getUserAdmin
       }}
     >
       {children}

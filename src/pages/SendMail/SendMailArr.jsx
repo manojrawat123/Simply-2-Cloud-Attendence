@@ -36,14 +36,6 @@ const sendMailArr = [
         placeholder: "Enter the body of the email here",
         icon : <Description className={iconCss}/>
     },
-    // {
-    //     type: "file",
-    //     name: "attachment",
-    //     required : false,
-    //     label: "Attachment",
-    //     placeholder: "Attachement (optional)",
-    //     icon : <FileCopy className={iconCss}/>
-    // },
     {
         type: "textarea",
         name: "signature",

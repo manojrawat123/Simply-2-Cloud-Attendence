@@ -28,7 +28,6 @@ const displayBatchArr = [
         'display': true,
         'id': 'batch_timing',
         'name': 'batch_timing',
-        // 'required': true,
         'label': 'Batch Timing',
         'placeholder': 'Batch Timing',
         'icon': <SupervisorAccountIcon className={iconCss} />

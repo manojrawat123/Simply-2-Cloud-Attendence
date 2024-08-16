@@ -73,8 +73,10 @@ const SearchPage = ({ title, search_page_arr, route_page, type}) => {
                                                                             required
                                                                             onChange={(selectedOption)=>{
                                                                                 setFieldValue(element.name , selectedOption.value)
+                                                                                if (title == "Search Batch"){
+                                                                                    navigate(`/${route_page}/${selectedOption.value}`)
+                                                                                }
                                                                             }}
-
                                                                         />
                                                                         :
                                                                         <>

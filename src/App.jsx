@@ -17,7 +17,6 @@ import DisplayBatch from './pages/BatchManagement/DisplayBatch/DisplayBatch';
 import AddStudent from './pages/BatchManagement/StudentManagement/AddStudent/AddStudent';
 import DisplayStudent from './pages/BatchManagement/StudentManagement/DisplayStudent/DisplayStudent';
 import Student from './pages/BatchManagement/StudentManagement/Student';
-// import SelectBatch from './pages/BatchManagement/StudentManagement/StudentAttendence/SelectBatch/SelectBatch';
 import Batch from './pages/BatchManagement/Batch';
 import StudentAttendence from './pages/BatchManagement/StudentManagement/StudentAttendence/StudentAttendence';
 import SelectBatchPost from './pages/BatchManagement/StudentManagement/StudentAttendence/SelectBatchPost/SelectBatchPost';
@@ -27,6 +26,8 @@ import ResetPassword from './component/ResetPassword/ResetPassword';
 import SearchStudent from './pages/BatchManagement/StudentManagement/SearchStudent/SearchStudent';
 import SendMail from './pages/SendMail/SendMail';
 import UpdateProfile from './pages/Profile/Profile';
+import DisplayBatchSearch from './pages/BatchManagement/BatchSearch/DisplayBatchSearch';
+import EmployeeList from './pages/EmployeeList/EmployeeList';
 
 
 function App() {
@@ -73,6 +74,12 @@ function App() {
             <Route path='/mydetail/:id' Component={AttendanceScreen} />
           </Route>
           <Route path='' Component={ProtectedRoutes} >
+            <Route path='/attendencedetail/:id' Component={AttendanceScreen} />
+          </Route>
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='/manage-employees' Component={EmployeeList} />
+          </Route>
+          <Route path='' Component={ProtectedRoutes} >
             <Route path='/attendence/:id/:month' Component={EmployeeMonthData} />
           </Route>
           <Route path='' Component={ProtectedRoutes} >
@@ -83,6 +90,12 @@ function App() {
           </Route>
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/display-batch' Component={DisplayBatch} />
+          </Route>
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='/search-batch' Component={DisplayBatchSearch} />
+          </Route>
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='/display-batch/:id' Component={DisplayBatch} />
           </Route>
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/add-student' Component={AddStudent} />
@@ -97,7 +110,16 @@ function App() {
             <Route path='/select-batch' Component={SelectBatchPost} />
           </Route>
           <Route path='' Component={ProtectedRoutes} >
+            <Route 
+              path='/select-batch/:id' 
+              Component={SelectBatchPost} 
+            />
+          </Route>
+          <Route path='' Component={ProtectedRoutes} >
             <Route path='/select-batch-get' Component={SelectBatchGet} />
+          </Route>
+          <Route path='' Component={ProtectedRoutes} >
+            <Route path='/select-batch-get/:id' Component={SelectBatchGet} />
           </Route>
           <Route path='' Component={ProtectedRoutes} >
             <Route path='/student-attendence/:id' Component={StudentAttendence} />
