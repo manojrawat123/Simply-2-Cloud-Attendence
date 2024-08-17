@@ -13,7 +13,7 @@ const profileUpdateArr = [
         'id': 'name',
         'name': 'name',
         'label': 'Name',
-        required : true,
+        required: true,
         'placeholder': 'Enter your name',
         'icon': <PersonIcon className={iconCss} />
     },
@@ -23,7 +23,7 @@ const profileUpdateArr = [
         'name': 'email',
         'label': 'Email',
         'placeholder': 'Enter your email',
-        required : true,
+        required: true,
         'icon': <EmailIcon className={iconCss} />
     },
     {
@@ -32,7 +32,7 @@ const profileUpdateArr = [
         'name': 'address',
         'label': 'Address',
         'placeholder': 'Enter your address',
-        required : true,
+        required: true,
         'icon': <HomeIcon className={iconCss} />
     },
     {
@@ -41,8 +41,19 @@ const profileUpdateArr = [
         'name': 'date_of_joining',
         'label': 'Date of Joining',
         'placeholder': 'Select date of joining',
-        required : true,
+        required: true,
         'icon': <DateRangeIcon className={iconCss} />
+    },
+    {
+        'type': 'date',
+        'id': 'date_of_birth',
+        'name': 'date_of_birth',
+        'label': 'Date of Birth',
+        'placeholder': 'Date of Birth',
+        required: true,
+        'icon': <DateRangeIcon
+            className={iconCss}
+        />
     },
     {
         'type': 'tel',
@@ -50,7 +61,7 @@ const profileUpdateArr = [
         'name': 'phone',
         'label': 'Phone',
         'placeholder': 'Enter your phone number',
-        required : true,
+        required: true,
         'icon': <PhoneIcon className={iconCss} />
     },
     {
@@ -59,7 +70,7 @@ const profileUpdateArr = [
         'name': 'role',
         'label': 'Role',
         'placeholder': 'Enter your role',
-        required : true,
+        required: true,
         'icon': <WorkIcon className={iconCss} />
     }
 ];
